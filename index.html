@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLAR Casino | Полный аналог Tonplay</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 
+        ================= ПОЛНАЯ СТРУКТУРА STYLE.CSS =================
+        1. Глобальные сбросы и переменные
+        2. Основная сетка (Grid System)
+        3. Шапка и навигация (Header/Navigation)
+        4. Боковое меню (Sidebar Menu)
+        5. Главный контент (Main Content Area)
+        6. Карточки игр (Game Cards System)
+        7. Live-казино секция (Live Casino)
+        8. Турниры и акции (Tournaments)
+        9. Футер (Footer)
+        10. Модальные окна (Modals)
+        11. Адаптивность (Responsive Breakpoints)
+        12. Анимации и эффекты (Animations)
+        */
+
+        /* === 1. ГЛОБАЛЬНЫЕ СБРОСЫ И ПЕРЕМЕННЫЕ === */
+        :root {
+            /* Цветовая система Tonplay */
+            --ton-blue: #0088cc;
+            --ton-blue-dark: #006699;
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121828;
+            --bg-tertiary: #1a2238;
+            --surface-card: #212a42;
+            --text-primary: #ffffff;
+            --text-secondary: #8c9ab0;
+            --text-tertiary: #6b7a99;
+            --border-color: #2a3655;
+            --success: #00c853;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --purple: #9c27b0;
+            
+            /* Тени */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+            
+            /* Скругления */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            /* Транзишены */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* === 2. ОСНОВНАЯ СЕТКА (GRID SYSTEM) === */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        /* === 3. ШАПКА И НАВИГАЦИЯ === */
+        .main-header {
+            grid-column: 1 / -1;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 30px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(18, 24, 40, 0.95);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--ton-blue);
+            font-size: 28px;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 4px;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--ton-blue);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Виджет баланса */
+        .balance-widget {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--surface-card));
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .balance-amount {
+            font-size: 18px;
+            color: var(--ton-blue);
+        }
+
+        /* Кнопки действий */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--ton-blue), var(--ton-blue-dark));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--surface-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* === 4. БОКОВОЕ МЕНЮ (SIDEBAR) === */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 0;
+            height: calc(100vh - 72px);
+            position: sticky;
+            top: 72px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            color: var(--text-tertiary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-left: 12px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .menu-item.active {
+            background: rgba(0, 136, 204, 0.15);
+            color: var(--ton-blue);
+            border-left: 3px solid var(--ton-blue);
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            background: var(--ton-blue);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* === 5. ГЛАВНЫЙ КОНТЕНТ === */
+        .main-content {
+            padding: 30px;
+            background: var(--bg-primary);
+            overflow-y: auto;
+            height: calc(100vh - 72px);
+        }
+
+        /* Баннер */
+        .hero-banner {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        /* Секции */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .section-link {
+            color: var(--ton-blue);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* === 6. СИСТЕМА КАРТОЧЕК ИГР === */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: var(--surface-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--ton-blue);
+        }
+
+        .game-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--ton-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .game-preview {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 */
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            overflow: hidden;
+        }
+
+        .game-preview img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .game-card:hover .game-preview img {
+            transform: scale(1.05);
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .game-card:hover .game-overlay {
+            opacity: 1;
+        }
+
+        .game-info {
+            padding: 20px;
+        }
+
+        .game-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .game-provider {
+            background: rgba(140, 154, 176, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .game-rtp {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* === 7. LIVE-КАЗИНО СЕКЦИЯ === */
+        .live-casino {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .live-streams {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .live-stream {
+            background: var(--surface-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--danger);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .viewers-count {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* === 8. ТУРНИРЫ И АКЦИИ === */
+        .tournaments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .tournament-card {
+            background: linear-gradient(135deg, var(--surface-card), var(--bg-tertiary));
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+        }
+
+        .tournament-card:hover {
+            border-color: var(--ton-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tournament-prize {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--ton-blue);
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ton-blue), var(--purple));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* === 9. ФУТЕР === */
+        .main-footer {
+            grid-column: 1 / -1;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--ton-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        /* === 10. МОДАЛЬНЫЕ ОКНА === */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        /* === 11. АДАПТИВНОСТЬ === */
+        @media (max-width: 1200px) {
+            .app-grid {
+                grid-template-columns: 220px 1fr;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 15px;
+                height: 60px;
+            }
+            
+            .header-left {
+                gap: 20px;
+            }
+            
+            .top-nav {
+                display: none;
+            }
+            
+            .balance-widget {
+                min-width: auto;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .hero-banner {
+                padding: 30px 20px;
+            }
+            
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .live-streams {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* === 12. АНИМАЦИИ И ЭФФЕКТЫ === */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Дополнительные утилиты */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--ton-blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    ================= ПОЛНАЯ СТРУКТУРА HTML =================
+    1. Шапка с навигацией
+    2. Боковое меню
+    3. Главный контент:
+       - Баннер
+       - Быстрые игры
+       - Рекомендуемые слоты
+       - Live-казино
+       - Турниры
+       - Поставщики игр
+    4. Футер
+    5. Модальные окна
+    -->
+
+    <!-- === 1. ШАПКА === -->
+    <div class="app-grid">
+        <header class="main-header">
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🎰</span>
+                    <span>POLAR CASINO</span>
+                </a>
+                
+                <nav class="top-nav">
+                    <a href="#" class="nav-item active">
+                        <i class="fas fa-home"></i> Главная
+                    </a>
+                    <a href="#slots" class="nav-item">
+                        <i class="fas fa-dice"></i> Слоты
+                    </a>
+                    <a href="#live" class="nav-item">
+                        <i class="fas fa-video"></i> Live Casino
+                    </a>
+                    <a href="#sports" class="nav-item">
+                        <i class="fas fa-trophy"></i> Спорт
+                    </a>
+                    <a href="#tournaments" class="nav-item">
+                        <i class="fas fa-flag"></i> Турниры
+                    </a>
+                    <a href="#bonuses" class="nav-item">
+                        <i class="fas fa-gift"></i> Бонусы
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <div class="balance-widget">
+                    <span class="ton-icon">TON</span>
+                    <span class="balance-amount" id="balanceAmount">12,540.80</span>
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 14px;">
+                        <i class="fas fa-plus"></i> Пополнить
+                    </button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="connectWalletBtn">
+                        <i class="fas fa-wallet"></i> Подключить кошелек
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- === 2. БОКОВОЕ МЕНЮ === -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Категории игр</h3>
+                <ul class="sidebar-menu">
+                    <li class="menu-item active" data-category="all">
+                        <span class="menu-icon"><i class="fas fa-fire"></i></span>
+                        <span>Популярные</span>
+                        <span class="menu-badge">42</span>
+                    </li>
+                    <li class="menu-item" data-category="slots">
+                        <span class="menu-icon"><i class="fas fa-dice"></i></span>
+                        <span>Слоты</span>
+                        <span class="menu-badge">250+</span>
+                    </li>
+                    <li class="menu-item" data-category="live">
+                        <span class="menu-icon"><i class="fas fa-video"></i></span>
+                        <span>Live Casino</span>
+                        <span class="menu-badge">40+</span>
+                    </li>
+                    <li class="menu-item" data-category="blackjack">
+                        <span class="menu-icon"><i class="fas fa-club"></i></span>
+                        <span>Блэкджек</span>
+                    </li>
+                    <li class="menu-item" data-category="roulette">
+                        <span class="menu-icon"><i class="fas fa-circle"></i></span>
+                        <span>Рулетка</span>
+                    </li>
+                    <li class="menu-item" data-category="poker">
+                        <span class="menu-icon"><i class="fas fa-spade"></i></span>
+                        <span>Покер</span>
+                    </li>
+                    <li class="menu-item" data-category="fast">
+                        <span class="menu-icon"><i class="fas fa-bolt"></i></span>
+                        <span>Быстрые игры</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Поставщики</h3>
+                <ul class="sidebar-menu">
+                    <li class="menu-item">
+                        <span class="menu-icon">🎮</span>
+                        <span>NetEnt</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-icon">🎯</span>
+                        <span>Pragmatic Play</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-icon">⚡</span>
+                        <span>Play'n GO</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-icon">🌟</span>
+                        <span>Evolution</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-icon">✨</span>
+                        <span>Microgaming</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Турниры</h3>
+                <ul class="sidebar-menu">
+                    <li class="menu-item">
+                        <span class="menu-icon"><i class="fas fa-trophy"></i></span>
+                        <span>TON Million</span>
+                        <span class="menu-badge">1M</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-icon"><i class="fas fa-crown"></i></span>
+                        <span>Weekly Race</span>
+                        <span class="menu-badge">100K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-icon"><i class="fas fa-star"></i></span>
+                        <span>Slot Battle</span>
+                        <span class="menu-badge">50K</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- === 3. ГЛАВНЫЙ КОНТЕНТ === -->
+        <main class="main-content">
+            <!-- Баннер -->
+            <section class="hero-banner fade-in">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        КРУПНЕЙШИЙ <span class="text-gradient">TON</span> КАЗИНО
+                    </h1>
+                    <p class="hero-subtitle">
+                        Более 1000 игр, мгновенные выплаты, live-дилеры и турниры с призовым фондом до 1,000,000 TON
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" style="padding: 15px 30px; font-size: 16px;">
+                            <i class="fas fa-play"></i> Начать игру
+                        </button>
+                        <button class="btn btn-secondary" style="padding: 15px 30px; font-size: 16px;">
+                            <i class="fas fa-gift"></i> Получить бонус
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Быстрые игры -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">⚡ Быстрые игры</h2>
+                    <a href="#all-fast" class="section-link">
+                        Все игры <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="games-grid">
+                    <!-- Игра 1 -->
+                    <div class="game-card">
+                        <div class="game-badge">HOT</div>
+                        <div class="game-preview">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; color: #ff9800;">
+                                🎯
+                            </div>
+                            <div class="game-overlay">
+                                <button class="btn btn-primary" onclick="playGame('plinko')">
+                                    <i class="fas fa-play"></i> Играть
+                                </button>
+                                <button class="btn btn-secondary" onclick="showDemo('plinko')">
+                                    <i class="fas fa-eye"></i> Демо
+                                </button>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-name">Plinko TON</div>
+                            <div class="game-meta">
+                                <span class="game-provider">Fast Games</span>
+                                <span class="game-rtp">RTP: 97%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Игра 2 -->
+                    <div class="game-card">
+                        <div class="game-badge">NEW</div>
+                        <div class="game-preview">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; color: #00c853;">
+                                🎰
+                            </div>
+                            <div class="game-overlay">
+                                <button class="btn btn-primary" onclick="playGame('crash')">
+                                    <i class="fas fa-play"></i> Играть
+                                </button>
+                                <button class="btn btn-secondary" onclick="showDemo('crash')">
+                                    <i class="fas fa-eye"></i> Демо
+                                </button>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-name">Crash X</div>
+                            <div class="game-meta">
+                                <span class="game-provider">BGaming</span>
+                                <span class="game-rtp">RTP: 96.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Игра 3 -->
+                    <div class="game-card">
+                        <div class="game-preview">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; color: #9c27b0;">
+                                🎮
+                            </div>
+                            <div class="game-overlay">
+                                <button class="btn btn-primary" onclick="playGame('dice')">
+                                    <i class="fas fa-play"></i> Играть
+                                </button>
+                                <button class="btn btn-secondary" onclick="showDemo('dice')">
+                                    <i class="fas fa-eye"></i> Демо
+                                </button>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-name">Dice Duel</div>
+                            <div class="game-meta">
+                                <span class="game-provider">Spribe</span>
+                                <span class="game-rtp">RTP: 98%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Игра 4 -->
+                    <div class="game-card">
+                        <div class="game-badge">LOW</div>
+                        <div class="game-preview">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; color: #0088cc;">
+                                🃏
+                            </div>
+                            <div class="game-overlay">
+                                <button class="btn btn-primary" onclick="playGame('blackjack')">
+                                    <i class="fas fa-play"></i> Играть
+                                </button>
+                                <button class="btn btn-secondary" onclick="showDemo('blackjack')">
+                                    <i class="fas fa-eye"></i> Демо
+                                </button>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-name">Blackjack Pro</div>
+                            <div class="game-meta">
+                                <span class="game-provider">Ezugi</span>
+                                <span class="game-rtp">RTP: 99.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Рекомендуемые слоты -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">🔥 Рекомендуемые слоты</h2>
+                    <div class="games-filter" style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary filter-btn active" data-filter="all">Все</button>
+                        <button class="btn btn-secondary filter-btn" data-filter="popular">Популярные</button>
+                        <button class="btn btn-secondary filter-btn" data-filter="new">Новые</button>
+                        <button class="btn btn-secondary filter-btn" data-filter="high">Высокий RTP</button>
+                    </div>
+                </div>
+                
+                <div class="games-grid" id="slotsContainer">
+                    <!-- Слоты загружаются через JS -->
+                </div>
+            </section>
+
+            <!-- Live-казино -->
+            <section class="live-casino section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-video" style="color: var(--danger);"></i> Live Casino</h2>
+                    <a href="#all-live" class="section-link">
+                        Все столы <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="live-streams">
+                    <!-- Live 1 -->
+                    <div class="live-stream">
+                        <div class="live-badge">
+                            <i class="fas fa-circle" style="font-size: 8px;"></i> LIVE
+                        </div>
+                        <div class="viewers-count">
+                            <i class="fas fa-eye"></i> 1.2K
+                        </div>
+                        <div class="game-preview">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a2e, #16213e); display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 50px; margin-bottom: 10px;">🎡</div>
+                                    <div style="font-size: 18px; font-weight: 600;">Рулетка VIP</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-name">Roulette Royal</div>
+                            <div class="game-meta">
+                                <span class="game-provider">Evolution</span>
+                                <span>Дилер: <strong>Anna</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Live 2 -->
+                    <div class="live-stream">
+                        <div class="live-badge">
+                            <i class="fas fa-circle" style="font-size: 8px;"></i> LIVE
+                        </div>
+                        <div class="viewers-count">
+                            <i class="fas fa-eye"></i> 845
+                        </div>
+                        <div class="game-preview">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #2d1b2e, #1a1621); display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 50px; margin-bottom: 10px;">🃏</div>
+                                    <div style="font-size: 18px; font-weight: 600;">Blackjack VIP</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-name">Blackjack Azure</div>
+                            <div class="game-meta">
+                                <span class="game-provider">Ezugi</span>
+                                <span>Дилер: <strong>Michael</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Турниры -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">🏆 Активные турниры</h2>
+                    <a href="#all-tournaments" class="section-link">
+                        Все турниры <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="tournaments-grid">
+                    <!-- Турнир 1 -->
+                    <div class="tournament-card">
+                        <div class="tournament-prize">1,000,000 TON</div>
+                        <h3 style="margin-bottom: 10px; font-size: 18px;">TON Million Race</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">
+                            Самый крупный турнир месяца. Топ-1000 игроков получат призы.
+                        </p>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary);">
+                            <span>65% заполнено</span>
+                            <span>12,543 участников</span>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                            <i class="fas fa-sign-in-alt"></i> Участвовать
+                        </button>
+                    </div>
+                    
+                    <!-- Турнир 2 -->
+                    <div class="tournament-card">
+                        <div class="tournament-prize">250,000 TON</div>
+                        <h3 style="margin-bottom: 10px; font-size: 18px;">Weekly Slot Battle</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">
+                            Еженедельный турнир по слотам. Призы каждую пятницу.
+                        </p>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%;"></div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary);">
+                            <span>85% заполнено</span>
+                            <span>8,421 участников</span>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                            <i class="fas fa-sign-in-alt"></i> Участвовать
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- === 4. ФУТЕР === -->
+        <footer class="main-footer">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>POLAR Casino</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Игры</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Все игры</a></li>
+                        <li><a href="#">Новые игры</a></li>
+                        <li><a href="#">Популярные</a></li>
+                        <li><a href="#">Live Casino</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Поддержка</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Правила</a></li>
+                        <li><a href="#">Безопасность</a></li>
+                        <li><a href="#">Ответственная игра</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Юридическое</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Условия использования</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#">AML политика</a></li>
+                        <li><a href="#">Лицензия</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2024 POLAR Casino. Все права защищены. | Лицензия Curacao № 365/JAZ</p>
+                <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;">
+                    POLAR Simulation | Архив сценариев | Все расчеты гипотетические
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- === 5. МОДАЛЬНЫЕ ОКНА === -->
+    <!-- Модалка подключения кошелька -->
+    <div class="modal" id="walletModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('walletModal')">&times;</button>
+            <h2 style="margin-bottom: 20px;">Подключение кошелька TON</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                Выберите способ подключения вашего TON кошелька
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <button class="btn btn-secondary" style="justify-content: flex-start; padding: 20px;">
+                    <i class="fas fa-mobile-alt" style="font-size: 24px; margin-right: 15px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-weight: 600;">Tonkeeper</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Мобильное приложение</div>
+                    </div>
+                </button>
+                
+                <button class="btn btn-secondary" style="justify-content: flex-start; padding: 20px;">
+                    <i class="fas fa-desktop" style="font-size: 24px; margin-right: 15px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-weight: 600;">Tonhub</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Веб-кошелек</div>
+                    </div>
+                </button>
+                
+                <button class="btn btn-secondary" style="justify-content: flex-start; padding: 20px;">
+                    <i class="fas fa-extension" style="font-size: 24px; margin-right: 15px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-weight: 600;">Ton Wallet</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Расширение браузера</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка игры -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content" style="max-width: 800px;">
+            <button class="modal-close" onclick="closeModal('gameModal')">&times;</button>
+            <div id="gameModalContent">
+                <!-- Контент игры загружается динамически -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+    ================= ПОЛНАЯ СТРУКТУРА JAVASCRIPT =================
+    1. Конфигурация и данные
+    2. Система игр
+    3. Управление балансом
+    4. Работа с модальными окнами
+    5. Фильтрация и поиск
+    6. Интеграция с Telegram
+    7. Вспомогательные функции
+    -->
+    <script>
+        // === 1. КОНФИГУРАЦИЯ И ДАННЫЕ ===
+        const POLAR_CONFIG = {
+            balance: 12540.80,
+            games: [
+                { id: 1, name: "Gates of Olympus", provider: "Pragmatic Play", rtp: 96.5, volatility: "high", type: "popular", minBet: 0.2, maxBet: 100, theme: "mythology" },
+                { id: 2, name: "Sweet Bonanza", provider: "Pragmatic Play", rtp: 96.5, volatility: "high", type: "popular", minBet: 0.2, maxBet: 100, theme: "candy" },
+                { id: 3, name: "Starburst", provider: "NetEnt", rtp: 96.1, volatility: "low", type: "popular", minBet: 0.1, maxBet: 100, theme: "space" },
+                { id: 4, name: "Book of Dead", provider: "Play'n GO", rtp: 96.2, volatility: "high", type: "new", minBet: 0.1, maxBet: 50, theme: "egypt" },
+                { id: 5, name: "Big Bass Bonanza", provider: "Pragmatic Play", rtp: 96.7, volatility: "medium", type: "high", minBet: 0.2, maxBet: 150, theme: "fishing" },
+                { id: 6, name: "Dead or Alive 2", provider: "NetEnt", rtp: 96.8, volatility: "high", type: "high", minBet: 0.09, maxBet: 45, theme: "wildwest" },
+                { id: 7, name: "Wolf Gold", provider: "Pragmatic Play", rtp: 96.0, volatility: "medium", type: "popular", minBet: 0.25, maxBet: 125, theme: "animals" },
+                { id: 8, name: "Jammin' Jars", provider: "Push Gaming", rtp: 96.8, volatility: "high", type: "new", minBet: 0.2, maxBet: 100, theme: "fruit" }
+            ],
+            history: [],
+            currentGame: null,
+            betAmount: 100,
+            isConnected: false,
+            theme: "dark"
+        };
+
+        // === 2. СИСТЕМА ИГР ===
+        function loadGames(filter = "all") {
+            const container = document.getElementById('slotsContainer');
+            container.innerHTML = '';
+            
+            const filteredGames = filter === "all" 
+                ? POLAR_CONFIG.games 
+                : POLAR_CONFIG.games.filter(game => game.type === filter);
+            
+            filteredGames.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card fade-in';
+                card.innerHTML = `
+                    <div class="game-badge">${game.type === "new" ? "NEW" : game.type === "high" ? "HIGH RTP" : "HOT"}</div>
+                    <div class="game-preview">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 50px; color: ${getThemeColor(game.theme)};">
+                            ${getGameIcon(game.theme)}
+                        </div>
+                        <div class="game-overlay">
+                            <button class="btn btn-primary" onclick="playGame(${game.id})">
+                                <i class="fas fa-play"></i> Играть
+                            </button>
+                            <button class="btn btn-secondary" onclick="showDemo(${game.id})">
+                                <i class="fas fa-eye"></i> Демо
+                            </button>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-name">${game.name}</div>
+                        <div class="game-meta">
+                            <span class="game-provider">${game.provider}</span>
+                            <span class="game-rtp">RTP: ${game.rtp}%</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getGameIcon(theme) {
+            const icons = {
+                mythology: "⚡",
+                candy: "🍭",
+                space: "✨",
+                egypt: "📖",
+                fishing: "🎣",
+                wildwest: "🤠",
+                animals: "🐺",
+                fruit: "🍇"
+            };
+            return icons[theme] || "🎰";
+        }
+
+        function getThemeColor(theme) {
+            const colors = {
+                mythology: "#ff9800",
+                candy: "#e91e63",
+                space: "#2196f3",
+                egypt: "#ffc107",
+                fishing: "#4caf50",
+                wildwest: "#795548",
+                animals: "#8bc34a",
+                fruit: "#9c27b0"
+            };
+            return colors[theme] || "#0088cc";
+        }
+
+        // === 3. ИГРОВАЯ ЛОГИКА ===
+        function playGame(gameId) {
+            const game = POLAR_CONFIG.games.find(g => g.id === gameId);
+            if (!game) return;
+            
+            if (POLAR_CONFIG.balance < POLAR_CONFIG.betAmount) {
+                showNotification("Недостаточно средств на балансе", "error");
+                return;
+            }
+            
+            POLAR_CONFIG.currentGame = game;
+            POLAR_CONFIG.balance -= POLAR_CONFIG.betAmount;
+            updateBalance();
+            
+            // Симуляция игры
+            const isWin = Math.random() < 0.4; // 40% шанс на победу
+            let winAmount = 0;
+            
+            if (isWin) {
+                const multiplier = 1 + Math.random() * 9; // Выигрыш 1x-10x
+                winAmount = POLAR_CONFIG.betAmount * multiplier;
+                POLAR_CONFIG.balance += winAmount;
+                
+                POLAR_CONFIG.history.push({
+                    game: game.name,
+                    type: "win",
+                    amount: winAmount.toFixed(2),
+                    bet: POLAR_CONFIG.betAmount,
+                    timestamp: new Date()
+                });
+                
+                showNotification(`🎉 Победа! Вы выиграли ${winAmount.toFixed(2)} TON`, "success");
+            } else {
+                POLAR_CONFIG.history.push({
+                    game: game.name,
+                    type: "loss",
+                    amount: POLAR_CONFIG.betAmount,
+                    bet: POLAR_CONFIG.betAmount,
+                    timestamp: new Date()
+                });
+                
+                showNotification(`💸 Ставка ${POLAR_CONFIG.betAmount} TON проиграна`, "info");
+            }
+            
+            updateBalance();
+            updateHistory();
+        }
+
+        function showDemo(gameId) {
+            const game = POLAR_CONFIG.games.find(g => g.id === gameId);
+            if (!game) return;
+            
+            openGameModal(game, true);
+        }
+
+        // === 4. УПРАВЛЕНИЕ БАЛАНСОМ ===
+        function updateBalance() {
+            document.getElementById('balanceAmount').textContent = 
+                POLAR_CONFIG.balance.toLocaleString('ru-RU', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+        }
+
+        function updateHistory() {
+            // Можно добавить обновление виджета истории
+        }
+
+        // === 5. РАБОТА С МОДАЛЬНЫМИ ОКНАМИ ===
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openGameModal(game, isDemo = false) {
+            const modalContent = document.getElementById('gameModalContent');
+            modalContent.innerHTML = `
+                <h2 style="margin-bottom: 10px;">${game.name} ${isDemo ? '(Демо)' : ''}</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Провайдер: ${game.provider} | RTP: ${game.rtp}% | Волатильность: ${game.volatility}
+                </p>
+                
+                <div style="background: var(--bg-tertiary); border-radius: var(--radius-lg); padding: 30px; margin-bottom: 20px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">
+                        ${getGameIcon(game.theme)}
+                    </div>
+                    <div style="font-size: 24px; font-weight: 600; margin-bottom: 10px;">
+                        ${isDemo ? 'ДЕМО-РЕЖИМ' : `Ставка: ${POLAR_CONFIG.betAmount} TON`}
+                    </div>
+                    
+                    ${!isDemo ? `
+                    <div style="margin: 20px 0;">
+                        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                            ${[50, 100, 200, 500, 1000].map(amount => `
+                                <button class="btn btn-secondary ${POLAR_CONFIG.betAmount === amount ? 'active' : ''}" 
+                                        onclick="changeBet(${amount})">
+                                    ${amount} TON
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <button class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;" 
+                            onclick="${isDemo ? 'spinDemo()' : `playGame(${game.id})`}">
+                        <i class="fas fa-play"></i> ${isDemo ? 'Крутить демо' : 'Сделать ставку'}
+                    </button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: var(--surface-card); padding: 20px; border-radius: var(--radius-lg);">
+                        <h4 style="margin-bottom: 10px;">Правила игры</h4>
+                        <p style="color: var(--text-secondary); font-size: 14px;">
+                            Соберите 3 или более одинаковых символа на активных линиях для выигрыша.
+                            Специальные символы активируют бонусные раунды и фриспины.
+                        </p>
+                    </div>
+                    <div style="background: var(--surface-card); padding: 20px; border-radius: var(--radius-lg);">
+                        <h4 style="margin-bottom: 10px;">Статистика</h4>
+                        <p style="color: var(--text-secondary); font-size: 14px;">
+                            RTP: ${game.rtp}%<br>
+                            Макс. выигрыш: ${(game.maxBet * 5000).toLocaleString()} TON<br>
+                            Линий: 20<br>
+                            Фриспины: Да
+                        </p>
+                    </div>
+                </div>
+            `;
+            openModal('gameModal');
+        }
+
+        function changeBet(amount) {
+            POLAR_CONFIG.betAmount = amount;
+            document.querySelectorAll('#gameModalContent .btn-secondary').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.textContent) === amount) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function spinDemo() {
+            const symbols = ['🍒', '🍋', '⭐', '🔔', '7️⃣', '🍀'];
+            const result = [
+                symbols[Math.floor(Math.random() * symbols.length)],
+                symbols[Math.floor(Math.random() * symbols.length)],
+                symbols[Math.floor(Math.random() * symbols.length)]
+            ];
+            
+            showNotification(`Демо: ${result.join(' ')} - ${result[0] === result[1] && result[1] === result[2] ? 'ДЖЕКПОТ!' : 'Попробуйте еще раз!'}`, "info");
+        }
+
+        // === 6. ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
+        function showNotification(message, type = "info") {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#f44336' : '#1e293b'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--radius-lg);
+                z-index: 3000;
+                box-shadow: var(--shadow-lg);
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+                border-left: 4px solid ${type === 'success' ? '#0da76c' : type === 'error' ? '#d32f2f' : '#0088cc'};
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Удаляем через 3 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // === 7. ИНИЦИАЛИЗАЦИЯ ===
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем игры
+            loadGames();
+            
+            // Настройка фильтров
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.getAttribute('data-filter');
+                    loadGames(filter);
+                });
+            });
+            
+            // Подключение кошелька
+            document.getElementById('connectWalletBtn').addEventListener('click', function() {
+                if (!POLAR_CONFIG.isConnected) {
+                    openModal('walletModal');
+                } else {
+                    showNotification("Кошелек уже подключен", "info");
+                }
+            });
+            
+            // Меню сайдбара
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    const category = this.getAttribute('data-category');
+                    loadGames(category === 'all' ? 'all' : category);
+                });
+            });
+            
+            // Имитация Telegram WebApp
+            if (window.Telegram && window.Telegram.WebApp) {
+                Telegram.WebApp.ready();
+                Telegram.WebApp.expand();
+                Telegram.WebApp.setHeaderColor('#0a0e17');
+                Telegram.WebApp.setBackgroundColor('#0a0e17');
+                Telegram.WebApp.MainButton.setText('Начать игру').show();
+            }
+            
+            // Добавляем стили для анимаций
+            if (!document.querySelector('#animation-styles')) {
+                const style = document.createElement('style');
+                style.id = 'animation-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                    .btn-secondary.active {
+                        background: var(--ton-blue) !important;
+                        color: white !important;
+                        border-color: var(--ton-blue) !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Обновляем баланс
+            updateBalance();
+        });
+
+        // === 8. ИНТЕГРАЦИЯ С TON ===
+        async function connectTonWallet(walletType) {
+            try {
+                // Имитация подключения
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                POLAR_CONFIG.isConnected = true;
+                POLAR_CONFIG.balance += 1000; // Бонус за регистрацию
+                
+                updateBalance();
+                closeModal('walletModal');
+                showNotification(`TON кошелек подключен! +1000 TON бонус`, "success");
+                
+                document.getElementById('connectWalletBtn').innerHTML = `
+                    <i class="fas fa-check"></i> Кошелек подключен
+                `;
+                document.getElementById('connectWalletBtn').style.background = '#10b981';
+                
+            } catch (error) {
+                showNotification("Ошибка подключения кошелька", "error");
+            }
+        }
+    </script>
+</body>
+</html>
